@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - ${KIDS_LOCATION}:/data/kids
+      - ${HOME_LOCATION}/jellyfin/config:/config
+      - ${TV_LOCATION}:/data/tvshows
+      - ${MOVIES_LOCATION}:/data/movies
+      - ${MVIDEOS_LOCATION}:/data/mvids
+      - ${MUSIC_LOCATION}:/data/music
+      - /dev/shm:/config/data/transcoding-temp/transcodes
+      - /opt/vc/lib:/opt/vc/lib
+    ports:
+      - 8097:8096
+    restart: unless-stopped
