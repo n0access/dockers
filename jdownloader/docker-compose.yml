@@ -1,0 +1,11 @@
+version: '3'
+services:
+  jdownloader-2:
+    container_name: jdownloader2
+    image: jlesage/jdownloader-2
+    ports:
+      - "5800:5800"
+    volumes:
+      - ${HOME_LOCATION}/jdownloader2:/config:rw
+      - ${JDW_LOCATION}:/output:rw
+    restart: always
