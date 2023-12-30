@@ -44,6 +44,7 @@ services:
      - ${DOWNLOADS_ROOT}/radarr/:/downloads/radarr
      - ${MOVIES_LOCATION}:/movies
      - ${KIDS_LOCATION}/movies:/kids
+     - ${DOWNLOADS_ROOT}/z/:/z
     environment:
      - PUID=1000
      - PGID=150
