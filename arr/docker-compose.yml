@@ -1,0 +1,82 @@
+version: "3"
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ${HOME_LOCATION}/bazarr/config:/config
+      - ${MOVIES_LOCATION}:/movies
+      - ${KIDS_LOCATION}/movies:/kids
+      - ${TV_LOCATION}:/tv
+    ports:
+      - 6767:6767
+    restart: always
+
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - ${HOME_LOCATION}/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+         max-size: "25m"
+         
+  radarr:
+    container_name: radarr
+    restart: always
+    ports:
+     - 7878:7878
+    volumes:
+     - ${HOME_LOCATION}/radarr/dockeras/radarr:/config
+     - ${DOWNLOADS_ROOT}/radarr/:/downloads/radarr
+     - ${MOVIES_LOCATION}:/movies
+     - ${KIDS_LOCATION}/movies:/kids
+    environment:
+     - PUID=1000
+     - PGID=150
+     - TZ=${TZ}
+    image: linuxserver/radarr
+
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr
+    restart: always
+    ports:
+     - 8989:8989
+
+    volumes:
+     - ${HOME_LOCATION}/sonarr:/config
+     - ${TV_LOCATION}:/tv
+     - ${DOWNLOADS_ROOT}/sonarr:/downloads
+
+    environment:
+     - PUID=1000
+     - PGID=150
+     - TZ=${TZ}
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+    volumes:
+      - ${HOME_LOCATION}/lidarr/appdata/config:/config
+      - ${MUSIC_LOCATION}:/music #optional
+      - ${DOWNLOADS_ROOT}/lidarr:/downloads #optional
+    ports:
+      - 8686:8686
+    restart: always
