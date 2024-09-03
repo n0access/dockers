@@ -61,7 +61,7 @@ services:
     volumes:
      - ${HOME_LOCATION}/sonarr:/config
      - ${TV_LOCATION}:/tv
-     - ${DOWNLOADS_ROOT}/sonarr:/downloads/sonarr
+     - ${DOWNLOADS_ROOT}/sonarr:/downloads
 
     environment:
      - PUID=1000
